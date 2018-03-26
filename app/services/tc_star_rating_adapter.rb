@@ -14,15 +14,13 @@ class TcStarRatingAdapter
     @tcs_data = []
     ratings_data.each do |tc_data|
       tc = {}
-      if !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"} &&
-        !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"}['choices']['labels'] &&
-         !!tc_data['answers'].find { |response| response['field']['id'] == "MIWlzH1BLFWb"}
-
+      if name_and_rating_exist(tc_data)
         tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'][0]
         tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
-        if !!tc_data['answers'].find { |response| response['field']['id'] == "ummCANBFwJ5i"}
+        if student_added_comment(tc_data)
           tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
         end
+
         @tcs_data << tc
       end
     end
@@ -30,14 +28,13 @@ class TcStarRatingAdapter
   end
 
   def self.aggregate(array)
-
     @tcs_ratings = {}
     array.each do |tc|
       if @tcs_ratings.keys.include?(tc[:name])
         @tcs_ratings["#{tc[:name]}"]["count"] += 1
         @tcs_ratings["#{tc[:name]}"]["cummulative_rating"] += tc[:rating]
         @tcs_ratings["#{tc[:name]}"]["rating"] = @tcs_ratings["#{tc[:name]}"]["cummulative_rating"].to_f / @tcs_ratings["#{tc[:name]}"]["count"].to_f.round(2)
-
+        @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
         if @tcs_ratings["#{tc[:name]}"]["comments"].keys.include?(tc[:rating].to_s)
           @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] << tc[:comment] if tc[:comment]
         else
@@ -45,15 +42,31 @@ class TcStarRatingAdapter
         end
 
       else
-        @tcs_ratings["#{tc[:name]}"] = {}
-        @tcs_ratings["#{tc[:name]}"]["rating"] = tc[:rating]
-        @tcs_ratings["#{tc[:name]}"]["cummulative_rating"] = tc[:rating]
-        @tcs_ratings["#{tc[:name]}"]["count"] = 1
-        @tcs_ratings["#{tc[:name]}"]["comments"] = {}
-        @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] = [tc[:comment]] if tc[:comment]
+        set_up_tc_record(tc)
       end
     end
     @tcs_ratings
+  end
+
+  def self.set_up_tc_record(tc)
+    @tcs_ratings["#{tc[:name]}"] = {}
+    @tcs_ratings["#{tc[:name]}"]["rating"] = tc[:rating]
+    @tcs_ratings["#{tc[:name]}"]["cummulative_rating"] = tc[:rating]
+    @tcs_ratings["#{tc[:name]}"]["count"] = 1
+    @tcs_ratings["#{tc[:name]}"]["distribution"] = [0,0,0,0,0]
+    @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
+    @tcs_ratings["#{tc[:name]}"]["comments"] = {}
+    @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] = [tc[:comment]] if tc[:comment]
+  end
+
+  def self.name_and_rating_exist(tc_data)
+    !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"} &&
+    !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"}['choices']['labels'] &&
+     !!tc_data['answers'].find { |response| response['field']['id'] == "MIWlzH1BLFWb"}
+  end
+
+  def self.student_added_comment(tc_data)
+    !!tc_data['answers'].find { |response| response['field']['id'] == "ummCANBFwJ5i"}
   end
 
   private
