@@ -1,1 +1,3 @@
-<h1>Technical Coach Star Ratings</h1>
+<% if user_signed_in? %>
+	<h1>Welcome, <%= current_user.username %>!</h1>
+<% end %>

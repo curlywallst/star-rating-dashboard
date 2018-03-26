@@ -13,6 +13,10 @@ class User < ApplicationRecord
     false
   end
 
+  def is_admin?
+    self.role == "admin"
+  end
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.username = auth.info.nickname
