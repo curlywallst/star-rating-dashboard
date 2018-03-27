@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:find]
+  before_action :authorize_user!
   
   def search
 
@@ -24,5 +25,13 @@ class UsersController < ApplicationController
   private
     def find_user
       @user = User.all.find{|user| user.username.downcase == params[:username].downcase}
+    end
+
+    def set_user
+      @user = User.find(username: params[:username])
+    end
+
+    def authorize_user!
+      redirect_to root_path if !current_user || !current_user.is_admin?
     end
 end

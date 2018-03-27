@@ -1,10 +1,10 @@
 <h2>Search By Github Username</h2>
-<p>Make sure user has already signed up in the app</p><br />
+<p>Make sure the technical coach lead or manager has already signed up in the app</p><br />
 <%= form_tag find_user_path do %>
     <div class="row">
       <div class="col-md-4">
         <div class="input-group">
-        <%= text_field_tag "username", nil, {class: "form-control", placeholder: "Search for..."}  %>
+        <%= text_field_tag "username", nil, {class: "form-control", placeholder: "Search for...", required: true}%>
         <span class="input-group-btn">
             <%= submit_tag "Search", class: "btn btn-default" %>
         </span>
