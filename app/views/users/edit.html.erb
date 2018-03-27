@@ -1,1 +1,7 @@
-<h3><%= @user.username.capitalize %></h3>
+<h3><%= @user.name %></h3>
+<%= form_for @user, url: add_user_path(@user.username) do |f|%>
+    <br/>
+    <%= f.label :admin %>
+    <%= f.check_box :is_admin?, name: "admin" %><br/><br/>
+    <%= f.submit "Update User", class: "btn btn-default" %>
+<% end %>

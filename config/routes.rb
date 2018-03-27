@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: "application#home"
 
   get '/users/add-user/:username', to: 'users#edit', as: "add_user"
-  post '/users/add-user/:username', to: 'users#update'
+  patch '/users/add-user/:username', to: 'users#update'
   get '/users/search-user', to: 'users#search', as: "find_user"
   post '/users/search-user', to: 'users#find'
 end

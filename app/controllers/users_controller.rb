@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:find]
+  before_action :set_user, only: [:edit, :update]
   before_action :authorize_user!
   
   def search
@@ -20,6 +21,9 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user.update(role: params["admin"] == "1" ? "admin" : nil)
+    flash[:warning] = params["admin"] == "1" ? "#{@user.name} has been made an admin." : "Admin has been removed for #{@user.name}."
+    redirect_to add_user_path(@user.username)
   end
 
   private
@@ -28,7 +32,7 @@ class UsersController < ApplicationController
     end
 
     def set_user
-      @user = User.find(username: params[:username])
+      @user = User.find_by(username: params[:username])
     end
 
     def authorize_user!
