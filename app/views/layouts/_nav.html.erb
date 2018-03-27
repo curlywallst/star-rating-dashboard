@@ -18,6 +18,7 @@
           <li><%= link_to "Log In", user_github_omniauth_authorize_path %></li>
         <% else %>
           <% if current_user.is_admin? %>
+            <li><%= link_to "Star Ratings", "#" %></li>    
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
               <ul class="dropdown-menu">
