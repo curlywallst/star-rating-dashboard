@@ -20,10 +20,10 @@ class TcStarRatingAdapter
         if student_added_comment(tc_data)
           tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
         end
-
         @tcs_data << tc
       end
     end
+    binding.pry
     aggregate(@tcs_data)
   end
 
