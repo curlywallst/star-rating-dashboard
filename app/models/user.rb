@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, authentication_keys: [:username]
-  devise :registerable, :recoverable, :rememberable, :trackable, :validatable
+  devise :registerable, :recoverable, :rememberable, :trackable
   devise :omniauthable, omniauth_providers: %i[github]
 
   def email_required?
