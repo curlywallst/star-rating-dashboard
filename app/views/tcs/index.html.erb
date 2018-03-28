@@ -1,0 +1,5 @@
+<h1>Technical Coaches<h1>
+  <ul>
+  <% @tcs.sort.each do |tech|%>
+    <h4><li><%= link_to tech , "#" %> <%= @tcs_data[tech]["distribution"]%></li></h4>
+  <%end%>

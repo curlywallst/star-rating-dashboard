@@ -23,7 +23,6 @@ class TcStarRatingAdapter
         @tcs_data << tc
       end
     end
-    binding.pry
     aggregate(@tcs_data)
   end
 
