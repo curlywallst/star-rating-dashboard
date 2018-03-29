@@ -44,7 +44,22 @@ class TcStarRatingAdapter
         set_up_tc_record(tc)
       end
     end
+    convert_dist_to_percents
     @tcs_ratings
+  end
+
+  def self.convert_dist_to_percents
+    tcs = @tcs_ratings.map{|tc| tc.first}
+    tcs.each do |tc|
+      array = @tcs_ratings[tc]["distribution"]
+      total = array.reduce(0){|result, current| result += current}
+      @tcs_ratings[tc]["percents"] = array.collect{|num| get_percentage(num, total)}
+    end
+  end
+
+  def self.get_percentage(num, total)
+    result = num.to_f * (100.to_f/total.to_f)
+    "#{result.round}%"
   end
 
   def self.set_up_tc_record(tc)
