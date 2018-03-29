@@ -1,5 +1,23 @@
-<h1>Technical Coaches<h1>
-  <ul>
-  <% @tcs.sort.each do |tech|%>
-    <h4><li><%= link_to tech , "#" %> <%= @tcs_data[tech]["distribution"]%></li></h4>
-  <%end%>
+<h1>Ask A Question Star Ratings</h1>
+  <table class="table table-hover">
+    <thead>
+      <th><h4>Technical Coach</h4></th>
+      <th><h4>1 Star</h4></th>
+      <th><h4>2 Star</h4></th>
+      <th><h4>3 Star</h4></th>
+      <th><h4>4 Star</h4></th>
+      <th><h4>5 Star</h4></th>
+    </thead>
+    <tbody>
+      <% @tcs.sort.each do |tech|%>
+        <tr>
+          <td><h4><%= link_to tech , "#" %></h4></td>
+          <td><h4><%= @tcs_data[tech]["distribution"][0] %> (<%= @tcs_data[tech]["percents"][0] %>)</h4></td>
+          <td><h4><%= @tcs_data[tech]["distribution"][1] %> (<%= @tcs_data[tech]["percents"][1] %>)</h4></td>
+          <td><h4><%= @tcs_data[tech]["distribution"][2] %> (<%= @tcs_data[tech]["percents"][2] %>)</h4></td>
+          <td><h4><%= @tcs_data[tech]["distribution"][3] %> (<%= @tcs_data[tech]["percents"][3] %>)</h4></td>
+          <td><h4><%= @tcs_data[tech]["distribution"][4] %> (<%= @tcs_data[tech]["percents"][4] %>)</h4></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
