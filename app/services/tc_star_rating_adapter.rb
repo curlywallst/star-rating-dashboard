@@ -34,11 +34,7 @@ class TcStarRatingAdapter
     @tcs_ratings = {}
     array.each do |tc|
       if @tcs_ratings.keys.include?(tc[:name])
-        @tcs_ratings["#{tc[:name]}"]["count"] += 1
-        @tcs_ratings["#{tc[:name]}"]["cummulative_rating"] += tc[:rating]
-        @tcs_ratings["#{tc[:name]}"]["rating"] = @tcs_ratings["#{tc[:name]}"]["cummulative_rating"].to_f / @tcs_ratings["#{tc[:name]}"]["count"].to_f.round(2)
         @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
-        # binding.pry
         add_comments(tc)
       else
         set_up_tc_record(tc)
@@ -49,9 +45,6 @@ class TcStarRatingAdapter
 
   def self.set_up_tc_record(tc)
     @tcs_ratings["#{tc[:name]}"] = {}
-    @tcs_ratings["#{tc[:name]}"]["rating"] = tc[:rating]
-    @tcs_ratings["#{tc[:name]}"]["cummulative_rating"] = tc[:rating]
-    @tcs_ratings["#{tc[:name]}"]["count"] = 1
     @tcs_ratings["#{tc[:name]}"]["distribution"] = [0,0,0,0,0]
     @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
     @tcs_ratings["#{tc[:name]}"]["comments"] = {}
