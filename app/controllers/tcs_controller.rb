@@ -3,21 +3,25 @@ class TcsController < ApplicationController
 
   def index
     @tcs_data = @@tcs_data
-    @tcs = @tcs_data.map {|tc| tc.first}
+    # binding.pry
+    @tcs = @tcs_data.map {|tc| [tc.first, slug(tc.first)]}
   end
 
   def show
     @tcs_data = @@tcs_data
     @tc_name = params[:slug]
-    @tc = @tcs_data[@tc_name]
+    binding.pry
+    @tc = find_by_slug(@tcs_data, params[:slug])
+    # @tc_name =
   end
 
   def slug(name)
     slug_name = name.gsub(/[^a-zA-Z]/,'-').downcase
   end
 
-  # def find_by_slug(slug)
-  #   @tcs_data.find {|a| a.first.slug === slug}
-  # end
+  def find_by_slug(data, slug)
+    binding.pry
+    data.find {|a| a.first.first.slug === slug}
+  end
 
 end

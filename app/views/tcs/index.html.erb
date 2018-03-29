@@ -1,6 +1,6 @@
 <h1>Technical Coaches<h1>
   <ul>
     <% @tcs.sort.each do |tech|%>
-      <h4><li><%= link_to tech , tcs(tech) %> <%= @tcs_data[tech]["distribution"]%></li></h4>
+      <h4><li><%= link_to tech[0] , find_tc_path(tech[1]) %> <%= @tcs_data[tech[0]]["distribution"]%></li></h4>
     <%end%>
   </ul>
