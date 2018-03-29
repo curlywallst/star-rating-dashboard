@@ -13,19 +13,16 @@ class TcStarRatingAdapter
     ratings_data = TcStarRatingAdapter.ratings['items']
     @tcs_data = []
     ratings_data.each do |tc_data|
-      # tc = {}
       if name_and_rating_exist(tc_data)
         tc = {}
         tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'].each do |tc_name|
           tc = {}
-          # binding.pry if tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'].length >1
           tc[:name] = tc_name
-          # binding.pry
           tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
           if student_added_comment(tc_data)
             tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
+            tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
           end
-          # binding.pry
           @tcs_data << tc
         end
       end
@@ -41,12 +38,8 @@ class TcStarRatingAdapter
         @tcs_ratings["#{tc[:name]}"]["cummulative_rating"] += tc[:rating]
         @tcs_ratings["#{tc[:name]}"]["rating"] = @tcs_ratings["#{tc[:name]}"]["cummulative_rating"].to_f / @tcs_ratings["#{tc[:name]}"]["count"].to_f.round(2)
         @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
-        if @tcs_ratings["#{tc[:name]}"]["comments"].keys.include?(tc[:rating].to_s)
-          @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] << tc[:comment] if tc[:comment]
-        else
-          @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] = [tc[:comment]] if tc[:comment]
-        end
-
+        # binding.pry
+        add_comments(tc)
       else
         set_up_tc_record(tc)
       end
@@ -62,7 +55,15 @@ class TcStarRatingAdapter
     @tcs_ratings["#{tc[:name]}"]["distribution"] = [0,0,0,0,0]
     @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
     @tcs_ratings["#{tc[:name]}"]["comments"] = {}
-    @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] = [tc[:comment]] if tc[:comment]
+    add_comments(tc)
+  end
+
+  def self.add_comments(tc)
+    if @tcs_ratings["#{tc[:name]}"]["comments"].keys.include?(tc[:rating].to_s)
+      @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] << {comment: tc[:comment], date: tc[:date]} if tc[:comment]
+    else
+      @tcs_ratings["#{tc[:name]}"]["comments"]["#{tc[:rating]}"] = [{comment: tc[:comment], date: tc[:date]}] if tc[:comment]
+    end
   end
 
   def self.name_and_rating_exist(tc_data)

@@ -16,8 +16,8 @@ class TcsController < ApplicationController
     slug_name = name.gsub(/[^a-zA-Z]/,'-').downcase
   end
 
-  def find_by_slug(slug)
-    @tcs_data.find {|a| a.first.slug === slug}
-  end
+  # def find_by_slug(slug)
+  #   @tcs_data.find {|a| a.first.slug === slug}
+  # end
 
 end
