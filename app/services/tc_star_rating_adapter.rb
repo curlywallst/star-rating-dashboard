@@ -98,9 +98,11 @@ class TcStarRatingAdapter
 
   private
   def self.fetch_responses(form_id)
-    responses_url = "https://api.typeform.com/forms/#{form_id}/responses?page_size=1000"
+    responses_url = "https://api.typeform.com/forms/#{form_id}/responses"
     request = Faraday.new(:url => responses_url)
     request.get do |req|
+      req.params['page_size'] = 1000
+      req.params['since'] = (DateTime.now-30).to_i
       req.headers['Authorization'] = "bearer #{@@typeform_token}"
       req.headers['Accept'] = "application/json"
     end
