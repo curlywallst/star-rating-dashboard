@@ -1,7 +1,7 @@
 <h1> Technical Coach Comments Page </h1>
-<h2><%= @tc_name %></h2>
+<h2><%= @tc.first %></h2>
 <ul>
-  <% @tc["comments"].sort.each do |rating| %>
+  <% @tc.second["comments"].sort.each do |rating| %>
     <h2><%= rating.first %> Stars</h2>
     <% rating.second.each do |comment| %>
       <li><%= comment[:date] %>: <%= comment[:comment] %></li>
