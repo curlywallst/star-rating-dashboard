@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   # get '/tc/add-user/:username', to: 'users#edit', as: "add_user"
 
-  get '/tcs', to: 'tcs#index', as:"tcs"
+  get '/tcs', to: 'tcs#index', as: "tcs"
+  get '/tcs/:slug', to: 'tcs#show', as: "show_tc"
 end

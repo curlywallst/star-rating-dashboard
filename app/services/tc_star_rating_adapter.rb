@@ -13,14 +13,21 @@ class TcStarRatingAdapter
     ratings_data = TcStarRatingAdapter.ratings['items']
     @tcs_data = []
     ratings_data.each do |tc_data|
-      tc = {}
+      # tc = {}
       if name_and_rating_exist(tc_data)
-        tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'][0]
-        tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
-        if student_added_comment(tc_data)
-          tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
+        tc = {}
+        tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'].each do |tc_name|
+          tc = {}
+          # binding.pry if tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'].length >1
+          tc[:name] = tc_name
+          # binding.pry
+          tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
+          if student_added_comment(tc_data)
+            tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
+          end
+          # binding.pry
+          @tcs_data << tc
         end
-        @tcs_data << tc
       end
     end
     aggregate(@tcs_data)

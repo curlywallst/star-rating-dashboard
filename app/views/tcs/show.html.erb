@@ -1,0 +1,10 @@
+<h1> Technical Coach Show Page </h1>
+<h2><%= @tc_name %> - Comments</h2>
+<ul>
+  <% @tc["comments"].sort.each do |rating| %>
+    <h2><%= rating.first %> Stars</h2>
+    <% rating.second.each do |comment| %>
+      <li><%= comment %></li>
+    <% end %>
+  <%end%>
+</ul>
