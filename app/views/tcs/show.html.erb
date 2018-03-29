@@ -1,10 +1,14 @@
 <h1> Technical Coach Comments Page </h1>
 <h2><%= @tc.first %></h2>
-<ul>
   <% @tc.second["comments"].sort.each do |rating| %>
     <h2><%= rating.first %> Stars</h2>
+    <table class="table table-hover">
+      <tbody>
     <% rating.second.each do |comment| %>
-      <li><%= comment[:date] %>: <%= comment[:comment] %></li>
+      <tr>
+        <td><strong><%= comment[:date] %></strong>: <%= comment[:comment] %></td>
+      </tr>
     <% end %>
+      </tbody>
+    </table>
   <%end%>
-</ul>
