@@ -13,3 +13,10 @@ Joshua Owens
 ------------
 Comments
 -------
+
+
+
+To dos:
+Slugify and show page
+Multiple names for one response
+Find out how to get all the typeform data
