@@ -14,7 +14,6 @@ class TcStarRatingAdapter
     @tcs_data = []
     ratings_data.each do |tc_data|
       if name_and_rating_exist(tc_data)
-        tc = {}
         tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'].each do |tc_name|
           tc = {}
           tc[:name] = tc_name
@@ -30,9 +29,9 @@ class TcStarRatingAdapter
     aggregate(@tcs_data)
   end
 
-  def self.aggregate(array)
+  def self.aggregate(tcs_data)
     @tcs_ratings = {}
-    array.each do |tc|
+    tcs_data.each do |tc|
       if @tcs_ratings.keys.include?(tc[:name])
         @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
         add_comments(tc)
