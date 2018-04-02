@@ -21,9 +21,16 @@ gem 'bootstrap-sass', '~> 3.3.7'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
   gem 'pry'
+  gem 'selenium-webdriver'
+  gem 'awesome_print'
+  gem 'factory_bot_rails'
+end
+
+group :test do
+  gem 'rspec-rails', '~> 3.7'
+  gem 'capybara', '~> 2.13'
+  gem 'database_cleaner'
 end
 
 group :development do
