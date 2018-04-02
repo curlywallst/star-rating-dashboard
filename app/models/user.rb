@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   has_many :roles
 
+  validates :username, presence: true, uniqueness: true
+
   def email_required?
     false
   end
