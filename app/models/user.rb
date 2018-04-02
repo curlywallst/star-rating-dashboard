@@ -7,7 +7,6 @@ class User < ApplicationRecord
 
   has_many :roles
   validates :username, presence: true, uniqueness: true
-  # validates :password, presence: true
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true
   validates :name, presence: true, uniqueness: true

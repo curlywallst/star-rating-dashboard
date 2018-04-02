@@ -1,4 +1,4 @@
-class TcsController < ApplicationController
+class TechnicalCoachesController < ApplicationController
 
   def index
     @tcs_data = TcStarRatingAdapter.get_ratings

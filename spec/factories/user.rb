@@ -7,4 +7,13 @@ FactoryBot.define do
     name "John Doe"
     uid "234325"
   end
+
+  factory :admin, class: User do
+    username "Admin"
+    email "admin@admin.net"
+    provider "github"
+    password SecureRandom.hex
+    name "Admin Bob"
+    uid "234342"
+  end
 end
