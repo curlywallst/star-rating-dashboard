@@ -6,7 +6,6 @@ User < - > Role -> Admin
                                                      => Study Groups
                                                      => One on One Support
 
-Role -> title: string
 Role -> user_id
 Role -> technical_coach_lead_id
 Role -> technical_coach_id

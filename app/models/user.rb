@@ -8,6 +8,10 @@ class User < ApplicationRecord
   has_many :roles
 
   validates :username, presence: true, uniqueness: true
+  # validates :password, presence: true
+  validates :uid, presence: true, uniqueness: true
+  validates :provider, presence: true
+  validates :name, presence: true, uniqueness: true
 
   def email_required?
     false
@@ -18,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def is_admin?
-    self.role == "admin"
+    self.roles.any?{|role| role.admin}
   end
 
   def self.from_omniauth(auth)
