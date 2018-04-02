@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :registerable, :recoverable, :rememberable, :trackable
   devise :omniauthable, omniauth_providers: %i[github]
 
+  has_many :roles
+
   def email_required?
     false
   end
