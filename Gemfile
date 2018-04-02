@@ -31,6 +31,7 @@ group :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'capybara', '~> 2.13'
   gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :development do
