@@ -21,8 +21,17 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update(role: params["admin"] == "1" ? "admin" : nil)
-    flash[:warning] = params["admin"] == "1" ? "#{@user.name} has been made an admin." : "Admin has been removed for #{@user.name}."
+    if params["admin"] == "1"
+      @user.is_admin? ? nil: @user.add_admin_role
+    else
+      @user.is_admin? ? @user.destroy_admin_role : nil
+    end
+
+    if @user.roles.empty?
+      flash[:warning] = "#{@user.name} has no roles."
+    else
+      flash[:warning] = "#{@user.name} has been given #{@user.list_roles}."
+    end
     redirect_to add_user_path(@user.username)
   end
 

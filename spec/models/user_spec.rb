@@ -69,5 +69,24 @@ RSpec.describe User, type: :model do
 			user.roles.create(admin: admin)
 			expect(user.is_admin?).to eq(true)
 		end
+		
+		it '#add_admin_role, adds admin role to user' do
+			user.add_admin_role
+			expect(user.is_admin?).to eq(true)
+		end
+
+		it '#destroy_admin_role, deletes admin role from database and removes role from user' do
+			admin = Admin.create
+			role = user.roles.create(admin: admin)
+			user.destroy_admin_role
+			expect(user.is_admin?).to eq(false)
+			expect(Role.find_by_id(role.id)).to eq(nil)
+			expect(Admin.find_by_id(admin.id)).to eq(nil)
+		end
+
+		it '#list_roles, returns a string of roles' do
+			user.add_admin_role
+			expect(user.list_roles).to eq("Admin")
+		end
 	end
 end
