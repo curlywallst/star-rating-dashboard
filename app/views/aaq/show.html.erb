@@ -1,0 +1,14 @@
+<h1> Technical Coach Ask A Question Comments Page (30 days) </h1>
+<h2><%= @tc.first %></h2>
+  <% @tc.second["comments"].sort.each do |rating| %>
+    <h2><%= rating.first %> Stars</h2>
+    <table class="table table-hover">
+      <tbody>
+    <% rating.second.each do |comment| %>
+      <tr>
+        <td><strong><%= comment[:date] %></strong>: <%= comment[:comment] %></td>
+      </tr>
+    <% end %>
+      </tbody>
+    </table>
+  <%end%>
