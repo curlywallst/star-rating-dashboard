@@ -14,17 +14,14 @@ class StudyGroupStarRatingAdapter
     @tcs_data = []
     ratings_data.each do |tc_data|
       if name_and_rating_exist(tc_data)
-        # tc_data['answers'].select { |response| response['field']['id'] == "UITJ1QSVLpHp"}[0]['choice']['label'].each do |tc_name|
-          tc = {}
-                binding.pry
-          tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "UITJ1QSVLpHp"}[0]['choice']['label']
-          tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "ySW1ykZbvteg"}[0]['number']
-          # if student_added_comment(tc_data)
-          #   tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
-          #   tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
-          # end
-          @tcs_data << tc
-        # end
+        tc = {}
+        tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "UITJ1QSVLpHp"}[0]['choice']['label']
+        tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "ySW1ykZbvteg"}[0]['number']
+        if student_added_comment(tc_data)
+          tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "PIQz3JHZOBNu"}["text"]
+          tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
+        end
+        @tcs_data << tc
       end
     end
     aggregate(@tcs_data)
@@ -35,7 +32,7 @@ class StudyGroupStarRatingAdapter
     tcs_data.each do |tc|
       if @tcs_ratings.keys.include?(tc[:name])
         @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
-        # add_comments(tc)
+        add_comments(tc)
       else
         set_up_tc_record(tc)
       end
@@ -93,7 +90,7 @@ class StudyGroupStarRatingAdapter
   end
 
   def self.student_added_comment(tc_data)
-    !!tc_data['answers'].find { |response| response['field']['id'] == "ummCANBFwJ5i"}
+    !!tc_data['answers'].find { |response| response['field']['id'] == "PIQz3JHZOBNu"}
   end
 
   private
