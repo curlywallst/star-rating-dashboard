@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   post '/users/add-technical-coach/:username', to: 'users#set_technical_coach'
   # get '/tc/add-user/:username', to: 'users#edit', as: "add_user"
 
-  get '/tcs', to: 'technical_coaches#index', as: "tcs"
-  get '/tcs/:slug', to: 'technical_coaches#show', as: "find_tc"
+  get '/tcs/aaq', to: 'aaq#index', as: "aaq"
+  get '/tcs/aaq/:slug', to: 'aaq#show', as: "find_tc_aaq"
+
+  get '/tcs/study_group', to: 'study_group#index', as: "study_group"
+  get '/tcs/study_group/:slug', to: 'study_group#show', as: "find_tc_study_group"
 end
