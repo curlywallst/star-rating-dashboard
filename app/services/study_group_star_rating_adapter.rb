@@ -1,29 +1,30 @@
 require 'json'
 
-class TcStarRatingAdapter
+class StudyGroupStarRatingAdapter
   TYPEFORM_TOKEN_KEY = "TYPEFORM_TOKEN"
 
   def self.ratings  #(form_id)
-    form_id = 'TW4DdU'
+    form_id = 'jMLdwE'
     @@typeform_token = ENV[TYPEFORM_TOKEN_KEY]
     JSON.parse(fetch_responses(form_id).body)
   end
 
   def self.get_ratings
-    ratings_data = TcStarRatingAdapter.ratings['items']
+    ratings_data = StudyGroupStarRatingAdapter.ratings['items']
     @tcs_data = []
     ratings_data.each do |tc_data|
       if name_and_rating_exist(tc_data)
-        tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'].each do |tc_name|
+        # tc_data['answers'].select { |response| response['field']['id'] == "UITJ1QSVLpHp"}[0]['choice']['label'].each do |tc_name|
           tc = {}
-          tc[:name] = tc_name
-          tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
-          if student_added_comment(tc_data)
-            tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
-            tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
-          end
+                binding.pry
+          tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "UITJ1QSVLpHp"}[0]['choice']['label']
+          tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "ySW1ykZbvteg"}[0]['number']
+          # if student_added_comment(tc_data)
+          #   tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
+          #   tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
+          # end
           @tcs_data << tc
-        end
+        # end
       end
     end
     aggregate(@tcs_data)
@@ -34,7 +35,7 @@ class TcStarRatingAdapter
     tcs_data.each do |tc|
       if @tcs_ratings.keys.include?(tc[:name])
         @tcs_ratings["#{tc[:name]}"]["distribution"][tc[:rating]-1] += 1
-        add_comments(tc)
+        # add_comments(tc)
       else
         set_up_tc_record(tc)
       end
@@ -86,9 +87,9 @@ class TcStarRatingAdapter
   end
 
   def self.name_and_rating_exist(tc_data)
-    !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"} &&
-    !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"}['choices']['labels'] &&
-     !!tc_data['answers'].find { |response| response['field']['id'] == "MIWlzH1BLFWb"}
+    !!tc_data['answers'].find { |response| response['field']['id'] == "UITJ1QSVLpHp"} &&
+    !!tc_data['answers'].find { |response| response['field']['id'] == "UITJ1QSVLpHp"}['choice']['label'] &&
+     !!tc_data['answers'].find { |response| response['field']['id'] == "ySW1ykZbvteg"}
   end
 
   def self.student_added_comment(tc_data)
