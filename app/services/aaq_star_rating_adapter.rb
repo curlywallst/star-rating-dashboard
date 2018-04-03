@@ -1,6 +1,6 @@
 require 'json'
 
-class TcStarRatingAdapter
+class AaqStarRatingAdapter
   TYPEFORM_TOKEN_KEY = "TYPEFORM_TOKEN"
 
   def self.ratings  #(form_id)
@@ -10,7 +10,7 @@ class TcStarRatingAdapter
   end
 
   def self.get_ratings
-    ratings_data = TcStarRatingAdapter.ratings['items']
+    ratings_data = AaqStarRatingAdapter.ratings['items']
     @tcs_data = []
     ratings_data.each do |tc_data|
       if name_and_rating_exist(tc_data)
