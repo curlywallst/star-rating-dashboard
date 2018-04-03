@@ -7,3 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 FactoryBot.create(:user)
+FactoryBot.create(:john)

@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
+Capybara.default_max_wait_time = 5000
 include Warden::Test::Helpers
 
 require 'database_cleaner'

@@ -3,5 +3,7 @@
     <br/>
     <%= f.label :admin %>
     <%= f.check_box :is_admin?, name: "admin" %><br/><br/>
+    <%= f.label :technical_coach, "Technical Coach" %>
+    <%= f.check_box :is_technical_coach?, name: "technical_coach" %><br/><br/>
     <%= f.submit "Update User", class: "btn btn-default" %>
 <% end %>

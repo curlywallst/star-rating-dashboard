@@ -16,4 +16,9 @@ FactoryBot.define do
     name "Admin Bob"
     uid "234342"
   end
+
+  factory :john, class: TechnicalCoach do
+    name "John D"
+    slug "john-d"
+  end
 end

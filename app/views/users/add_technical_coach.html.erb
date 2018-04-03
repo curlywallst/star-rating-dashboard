@@ -1,0 +1,8 @@
+<h1><%= @user.name %></h1>
+
+<h3>Associate Technical Coach to this account</h3>
+<%= form_for @role, url: add_technical_coach_path(@user.username) do |f|%>
+    <br/>
+    <%= f.collection_select :technical_coach_id, TechnicalCoach.all, :id, :name, {prompt: true} %><br/><br/>
+    <%= f.submit "Update User", class: "btn btn-default" %>
+<% end %>

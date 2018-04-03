@@ -23,8 +23,21 @@ class User < ApplicationRecord
     roles.any?{|role| role.admin}
   end
 
+  def is_technical_coach?
+    roles.any?{|role| role.technical_coach}
+  end
+
   def add_admin_role
     roles.create(admin: Admin.create)
+  end
+
+  def add_technical_coach_role(id)
+    roles.create(technical_coach: TechnicalCoach.find_by_id(id))
+  end
+
+  def destroy_technical_coach_role
+    roles.each{|role| role.destroy if role.technical_coach}
+    update(roles: roles.select{|role| !role.technical_coach})
   end
 
   def destroy_admin_role
@@ -35,7 +48,11 @@ class User < ApplicationRecord
 
   def list_roles
     roles.collect do |role|
-      "Admin" if role.admin
+      if role.admin
+        "Admin"
+      elsif role.technical_coach
+        "Technical Coach"
+      end
     end.join(", ")
   end
 

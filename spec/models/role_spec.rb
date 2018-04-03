@@ -17,5 +17,12 @@ RSpec.describe Role, type: :model do
 
       expect(user.roles.first.admin).to eq(admin)
     end
+
+    it 'can have a technical coach role' do
+      tc = TechnicalCoach.create(name: "Bob", slug: "bob")
+      user.roles.create(technical_coach: tc)
+
+      expect(user.roles.first.technical_coach).to eq(tc)
+    end
   end
 end
