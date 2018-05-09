@@ -18,10 +18,21 @@ class AaqStarRatingAdapter
           tc = {}
           tc[:name] = tc_name
           tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
+          tc[:landing_id] = tc_data["landing_id"]
+          tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
           if student_added_comment(tc_data)
             tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
             tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
           end
+          technical_coach = TechnicalCoach.find_by(name: tc[:name])
+          if !technical_coach
+            technical_coach = TechnicalCoach.create({name: tc[:name], ratings: []})
+          end
+          rating_data = Rating.find_by(landing_id: tc[:landing_id])
+          if !rating_data
+            rating_data = Rating.create({landing_id: tc[:landing_id], comment: tc[:comment], stars: tc[:rating], comment: tc[:comment], rating_type: "AAQ", date: tc[:date]})
+          end
+          technical_coach.ratings << rating_data
           @tcs_data << tc
         end
       end
