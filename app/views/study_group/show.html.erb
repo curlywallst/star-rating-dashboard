@@ -1,14 +1,72 @@
 <h1> Technical Coach Study Group Comments Page (30 days) </h1>
-<h2><%= @tc.first %></h2>
-  <% @tc.second["comments"].sort.each do |rating| %>
-    <h2><%= rating.first %> Stars</h2>
+<h2><%= @tc.name %></h2>
+  <% if @tc.study_group_ratings.filter_by_star(1).length > 0 %>
+    <h2>1 Stars</h2>
     <table class="table table-hover">
       <tbody>
-    <% rating.second.each do |comment| %>
-      <tr>
-        <td><strong><%= comment[:date] %></strong>: <%= comment[:comment] %></td>
-      </tr>
-    <% end %>
+        <% @tc.study_group_ratings.filter_by_star(1).each do |rating| %>
+          <tr>
+            <% if rating.comment %>
+              <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
+            <% end %>
+          </tr>
+        <% end %>
       </tbody>
     </table>
-  <%end%>
+  <% end %>
+    <% if @tc.study_group_ratings.filter_by_star(2).length > 0 %>
+    <h2>2 Stars</h2>
+    <table class="table table-hover">
+      <tbody>
+        <% @tc.study_group_ratings.filter_by_star(2).each do |rating| %>
+          <tr>
+            <% if rating.comment %>
+              <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+    <% if @tc.study_group_ratings.filter_by_star(3).length > 0 %>
+    <h2>3 Stars</h2>
+    <table class="table table-hover">
+      <tbody>
+        <% @tc.study_group_ratings.filter_by_star(3).each do |rating| %>
+          <tr>
+            <% if rating.comment %>
+              <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+    <% if @tc.study_group_ratings.filter_by_star(4).length > 0 %>
+    <h2>4 Stars</h2>
+    <table class="table table-hover">
+      <tbody>
+        <% @tc.study_group_ratings.filter_by_star(4).each do |rating| %>
+          <tr>
+            <% if rating.comment %>
+              <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <% if @tc.study_group_ratings.filter_by_star(5).length > 0 %>
+    <h2>5 Stars</h2>
+    <table class="table table-hover">
+      <tbody>
+        <% @tc.study_group_ratings.filter_by_star(5).each do |rating| %>
+          <tr>
+            <% if rating.comment %>
+              <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
