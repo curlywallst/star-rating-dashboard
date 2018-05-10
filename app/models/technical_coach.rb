@@ -12,4 +12,27 @@ class TechnicalCoach < ApplicationRecord
       self.ratings.where("rating_type = ?", "AAQ")
     end
 
+    def get_aaq_ratings_by_month(month)
+      if month != "All"
+        self.aaq_ratings.where('extract(month from date) = ?', Date::MONTHNAMES.index(month))
+      else
+        self.aaq_ratings
+      end
+    end
+
+    def get_study_group_ratings_by_month(month)
+      if month != "All"
+        self.study_group_ratings.where('extract(month from date) = ?', Date::MONTHNAMES.index(month))
+      else
+        self.study_group_ratings
+      end
+    end
+
+    def slug
+      self.name.downcase.split(" ").join("-")
+    end
+
+    def self.find_by_slug(slug)
+      self.find{|tc| tc.slug == slug}
+    end
 end

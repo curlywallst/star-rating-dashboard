@@ -19,7 +19,7 @@ class AaqStarRatingAdapter
           tc[:name] = tc_name
           tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
           tc[:landing_id] = tc_data["landing_id"]
-          tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
+          tc[:date] = tc_data["submitted_at"]
           if student_added_comment(tc_data)
             tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
           end

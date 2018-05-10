@@ -68,9 +68,5 @@ class UsersController < ApplicationController
       @user = User.find_by(username: params[:username])
     end
 
-    def authorize_user!
-      redirect_to root_path if !current_user || !current_user.is_admin?
-    end
-
     
 end

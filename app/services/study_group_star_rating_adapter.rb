@@ -18,7 +18,7 @@ class StudyGroupStarRatingAdapter
         tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "UITJ1QSVLpHp"}[0]['choice']['label']
         tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "ySW1ykZbvteg"}[0]['number']
         tc[:landing_id] = tc_data["landing_id"]
-        tc[:date] = DateTime.strptime(tc_data["submitted_at"]).strftime('%D')
+        tc[:date] = tc_data["submitted_at"]
         if student_added_comment(tc_data)
           tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "PIQz3JHZOBNu"}["text"]
         end

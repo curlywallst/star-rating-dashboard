@@ -1,12 +1,28 @@
 class StudyGroupController < ApplicationController
-
+  before_action :set_months
+  
   def index
-    @tcs_data = StudyGroupStarRatingAdapter.get_ratings
-    @tcs = @tcs_data.map {|tc| tc.first}
+    @month = "All"
+    StudyGroupStarRatingAdapter.get_ratings
   end
 
   def show
-    @tcs_data = StudyGroupStarRatingAdapter.get_ratings
-    @tc = @tcs_data.find{|tc| tc.second["slug"] == params[:slug]}
+    StudyGroupStarRatingAdapter.get_ratings
+    @tc = TechnicalCoach.find_by_slug(params[:slug])
   end
+
+  def search
+    @month = params.to_unsafe_h[:month]
+    render :index
+  end
+
+  private
+    def set_months
+      @months = [
+        "All",
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+      ]
+    end
 end

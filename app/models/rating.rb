@@ -5,7 +5,7 @@ class Rating < ApplicationRecord
 
   def self.star_percent(star)
     result = filter_by_star(star).count.to_f * (100.to_f/count.to_f)
-    result.round
+    result.nan? ? 0 : result.round
   end
 
   def self.star_count(star)
@@ -14,5 +14,9 @@ class Rating < ApplicationRecord
 
   def self.filter_by_star(star)
     where("stars = ?", star)
+  end
+
+  def parse_date
+    self.date.strftime("%D")
   end
 end

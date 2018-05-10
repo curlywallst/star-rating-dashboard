@@ -1,5 +1,9 @@
 
-<h1>Study Group Star Ratings (30 days)</h1>
+<h1>Study Group Star Ratings ( <%= @month %> )</h1>
+  <%= form_tag study_group_search_path do %>
+    <%= select_tag "month", options_for_select(@months, @month) %>
+    <%= submit_tag "Search", class: "btn btn-default" %>
+  <% end %>
   <table class="table table-hover">
     <thead>
       <th><h4>Technical Coach</h4></th>
@@ -10,14 +14,14 @@
       <th><h4>5 Star</h4></th>
     </thead>
     <tbody>
-      <% @tcs.sort.each do |tech|%>
+      <% TechnicalCoach.all.sort_by{|tc| tc.name}.each do |tc|%>
         <tr>
-          <td><h4><%= link_to tech, find_tc_study_group_path(@tcs_data[tech]["slug"]) %></h4></td>
-          <td><h4><%= @tcs_data[tech]["distribution"][0] %> (<%= @tcs_data[tech]["percents"][0] %>)</h4></td>
-          <td><h4><%= @tcs_data[tech]["distribution"][1] %> (<%= @tcs_data[tech]["percents"][1] %>)</h4></td>
-          <td><h4><%= @tcs_data[tech]["distribution"][2] %> (<%= @tcs_data[tech]["percents"][2] %>)</h4></td>
-          <td><h4><%= @tcs_data[tech]["distribution"][3] %> (<%= @tcs_data[tech]["percents"][3] %>)</h4></td>
-          <td><h4><%= @tcs_data[tech]["distribution"][4] %> (<%= @tcs_data[tech]["percents"][4] %>)</h4></td>
+          <td><h4><%= link_to tc.name, find_tc_study_group_path(tc.slug) %></h4></td>
+          <td><h4><%= tc.get_study_group_ratings_by_month(@month).star_count(1) %> (<%= tc.get_study_group_ratings_by_month(@month).star_percent(1) %>%)</h4></td>
+          <td><h4><%= tc.get_study_group_ratings_by_month(@month).star_count(2) %> (<%= tc.get_study_group_ratings_by_month(@month).star_percent(2) %>%)</h4></td>
+          <td><h4><%= tc.get_study_group_ratings_by_month(@month).star_count(3) %> (<%= tc.get_study_group_ratings_by_month(@month).star_percent(3) %>%)</h4></td>
+          <td><h4><%= tc.get_study_group_ratings_by_month(@month).star_count(4) %> (<%= tc.get_study_group_ratings_by_month(@month).star_percent(4) %>%)</h4></td>
+          <td><h4><%= tc.get_study_group_ratings_by_month(@month).star_count(5) %> (<%= tc.get_study_group_ratings_by_month(@month).star_percent(5) %>%)</h4></td>
         </tr>
       <%end%>
     </tbody>

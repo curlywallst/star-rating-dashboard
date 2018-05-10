@@ -13,8 +13,10 @@ Rails.application.routes.draw do
   # get '/tc/add-user/:username', to: 'users#edit', as: "add_user"
 
   get '/tcs/aaq', to: 'aaq#index', as: "aaq"
+  post "/tcs/aaq/search", to: "aaq#search", as: "aaq_search"
   get '/tcs/aaq/:slug', to: 'aaq#show', as: "find_tc_aaq"
 
   get '/tcs/study_group', to: 'study_group#index', as: "study_group"
+  post "/tcs/study_group/search", to: "study_group#search", as: "study_group_search"
   get '/tcs/study_group/:slug', to: 'study_group#show', as: "find_tc_study_group"
 end
