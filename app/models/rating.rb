@@ -13,7 +13,7 @@ class Rating < ApplicationRecord
   end
 
   def self.filter_by_star(star)
-    where("stars = ?", star)
+    where("stars = ?", star).order(date: :desc)
   end
 
   def parse_date
