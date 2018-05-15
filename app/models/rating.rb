@@ -19,4 +19,8 @@ class Rating < ApplicationRecord
   def parse_date
     self.date.strftime("%D")
   end
+
+  def valid_comment
+    !!self.comment && !self.comment.strip.empty?
+  end
 end

@@ -102,7 +102,8 @@ class AaqStarRatingAdapter
   end
 
   def self.student_added_comment(tc_data)
-    !!tc_data['answers'].find { |response| response['field']['id'] == "ummCANBFwJ5i"}
+    comment = tc_data['answers'].find { |response| response['field']['id'] == "ummCANBFwJ5i"}
+    !!comment
   end
 
   private

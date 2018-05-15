@@ -6,7 +6,7 @@
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(1).each do |rating| %>
           <tr>
-            <% if rating.comment && rating.comment != " " %>
+            <% if rating.valid_comment %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -20,7 +20,7 @@
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(2).each do |rating| %>
           <tr>
-            <% if rating.comment && rating.comment != " " %>
+            <% if rating.valid_comment %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -34,7 +34,7 @@
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(3).each do |rating| %>
           <tr>
-            <% if rating.comment && rating.comment != " " %>
+            <% if rating.valid_comment %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -48,7 +48,7 @@
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(4).each do |rating| %>
           <tr>
-            <% if rating.comment && rating.comment != " " %>
+            <% if rating.valid_comment %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -62,7 +62,7 @@
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(5).each do |rating| %>
           <tr>
-            <% if rating.comment && rating.comment != " " %>
+            <% if rating.valid_comment %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
