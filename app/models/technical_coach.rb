@@ -28,6 +28,14 @@ class TechnicalCoach < ApplicationRecord
       end
     end
 
+    def self.get_aaq_coaches
+      self.select{|tc| tc.aaq_ratings.find{|sg| sg.rating_type == "AQ"}}
+    end
+
+    def self.get_study_group_coaches
+      self.select{|tc| tc.study_group_ratings.find{|sg| sg.rating_type == "SG"}}
+    end
+
     def slug
       self.name.downcase.split(" ").join("-")
     end

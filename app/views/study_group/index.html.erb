@@ -14,7 +14,7 @@
       <th><h4>5 Star</h4></th>
     </thead>
     <tbody>
-      <% TechnicalCoach.all.sort_by{|tc| tc.name}.each do |tc|%>
+      <% TechnicalCoach.all.get_study_group_coaches.sort_by{|tc| tc.name}.each do |tc|%>
         <tr>
           <td><h4><%= link_to tc.name, find_tc_study_group_path(tc.slug) %></h4></td>
           <td><h4><%= tc.get_study_group_ratings_by_month(@month).star_count(1) %> (<%= tc.get_study_group_ratings_by_month(@month).star_percent(1) %>%)</h4></td>
