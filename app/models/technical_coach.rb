@@ -29,7 +29,7 @@ class TechnicalCoach < ApplicationRecord
     end
 
     def self.get_aaq_coaches
-      self.select{|tc| tc.aaq_ratings.find{|sg| sg.rating_type == "AQ"}}
+      self.select{|tc| tc.aaq_ratings.find{|sg| sg.rating_type == "AAQ"}}
     end
 
     def self.get_study_group_coaches
