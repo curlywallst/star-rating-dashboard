@@ -1,12 +1,12 @@
 <h1> Technical Coach Ask A Question Comments Page (30 days) </h1>
 <h2><%= @tc.name %></h2>
-  <% if @tc.aaq_ratings.filter_by_star(1).length > 0 %>
+  <% if @tc.aaq_ratings.filter_by_star(1).length > 0 && @tc.aaq_ratings.filter_by_star(1).find{|rating| !rating.comment.nil?} %>
     <h2>1 Stars</h2>
     <table class="table table-hover">
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(1).each do |rating| %>
           <tr>
-            <% if rating.comment %>
+            <% if rating.comment && rating.comment != " " %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -14,13 +14,13 @@
       </tbody>
     </table>
   <% end %>
-    <% if @tc.aaq_ratings.filter_by_star(2).length > 0 %>
+    <% if @tc.aaq_ratings.filter_by_star(2).length > 0 && @tc.aaq_ratings.filter_by_star(2).find{|rating| !rating.comment.nil?} %>
     <h2>2 Stars</h2>
     <table class="table table-hover">
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(2).each do |rating| %>
           <tr>
-            <% if rating.comment %>
+            <% if rating.comment && rating.comment != " " %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -28,13 +28,13 @@
       </tbody>
     </table>
   <% end %>
-    <% if @tc.aaq_ratings.filter_by_star(3).length > 0 %>
+    <% if @tc.aaq_ratings.filter_by_star(3).length > 0 && @tc.aaq_ratings.filter_by_star(3).find{|rating| !rating.comment.nil?} %>
     <h2>3 Stars</h2>
     <table class="table table-hover">
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(3).each do |rating| %>
           <tr>
-            <% if rating.comment %>
+            <% if rating.comment && rating.comment != " " %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -42,13 +42,13 @@
       </tbody>
     </table>
   <% end %>
-    <% if @tc.aaq_ratings.filter_by_star(4).length > 0 %>
+    <% if @tc.aaq_ratings.filter_by_star(4).length > 0 && @tc.aaq_ratings.filter_by_star(4).find{|rating| !rating.comment.nil?} %>
     <h2>4 Stars</h2>
     <table class="table table-hover">
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(4).each do |rating| %>
           <tr>
-            <% if rating.comment %>
+            <% if rating.comment && rating.comment != " " %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
@@ -56,13 +56,13 @@
       </tbody>
     </table>
   <% end %>
-  <% if @tc.aaq_ratings.filter_by_star(5).length > 0 %>
+  <% if @tc.aaq_ratings.filter_by_star(5).length > 0 && @tc.aaq_ratings.filter_by_star(5).find{|rating| !rating.comment.nil?} %>
     <h2>5 Stars</h2>
     <table class="table table-hover">
       <tbody>
         <% @tc.aaq_ratings.filter_by_star(5).each do |rating| %>
           <tr>
-            <% if rating.comment %>
+            <% if rating.comment && rating.comment != " " %>
               <td><strong><%= rating.parse_date %></strong>: <%= rating.comment %></td>
             <% end %>
           </tr>
