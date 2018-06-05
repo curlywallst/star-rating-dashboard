@@ -1,25 +1,25 @@
 require 'json'
 
-class StudyGroupStarRatingAdapter
+class OneOnOneRatingAdapter
   TYPEFORM_TOKEN_KEY = "TYPEFORM_TOKEN"
 
   def self.ratings  #(form_id)
-    form_id = 'jMLdwE'
+    form_id = 'IyUQO9'
     @@typeform_token = ENV[TYPEFORM_TOKEN_KEY]
     JSON.parse(fetch_responses(form_id).body)
   end
 
   def self.get_ratings
-    ratings_data = StudyGroupStarRatingAdapter.ratings['items']
+    ratings_data = OneOnOneRatingAdapter.ratings['items']
     ratings_data.each do |tc_data|
       if name_and_rating_exist(tc_data)
         tc = {}
-        tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "UITJ1QSVLpHp"}[0]['choice']['label']
-        tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "ySW1ykZbvteg"}[0]['number']
+        tc[:name] = tc_data['answers'].select { |response| response['field']['id'] == "PLZHEUOsC9vG"}[0]['choice']['label']
+        tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "70719218"}[0]['number']
         tc[:landing_id] = tc_data["landing_id"]
         tc[:date] = tc_data["submitted_at"]
         if student_added_comment(tc_data)
-          tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "PIQz3JHZOBNu"}["text"]
+          tc[:comment] = tc_data['answers'].select { |response| response['field']['id'] == "70719440"}[0]['text']
         end
         technical_coach = TechnicalCoach.find_by(name: tc[:name])
         if !technical_coach
@@ -27,7 +27,7 @@ class StudyGroupStarRatingAdapter
         end
         rating_data = Rating.find_by(landing_id: tc[:landing_id])
         if !rating_data
-          rating_data = Rating.create({landing_id: tc[:landing_id], stars: tc[:rating], comment: tc[:comment], rating_type: "SG", date: tc[:date]})
+          rating_data = Rating.create({landing_id: tc[:landing_id], stars: tc[:rating], comment: tc[:comment], rating_type: "1:1", date: tc[:date]})
         end
         technical_coach.ratings << rating_data unless technical_coach.ratings.include?(rating_data)
       end
@@ -35,13 +35,14 @@ class StudyGroupStarRatingAdapter
   end
 
   def self.name_and_rating_exist(tc_data)
-    !!tc_data['answers'].find { |response| response['field']['id'] == "UITJ1QSVLpHp"} &&
-    !!tc_data['answers'].find { |response| response['field']['id'] == "UITJ1QSVLpHp"}['choice']['label'] &&
-     !!tc_data['answers'].find { |response| response['field']['id'] == "ySW1ykZbvteg"}
+    !!tc_data['answers'].find { |response| response['field']['id'] == "PLZHEUOsC9vG"} &&
+    !!tc_data['answers'].find { |response| response['field']['id'] == "PLZHEUOsC9vG"}['choice']['label'] &&
+     !!tc_data['answers'].find { |response| response['field']['id'] == "70719218"}
   end
 
   def self.student_added_comment(tc_data)
-    !!tc_data['answers'].find { |response| response['field']['id'] == "PIQz3JHZOBNu"}
+    comment = tc_data['answers'].find { |response| response['field']['id'] == "70719440"}
+    !!comment
   end
 
   private
