@@ -4,25 +4,27 @@ class AaqStarRatingAdapter
   TYPEFORM_TOKEN_KEY = "TYPEFORM_TOKEN"
 
   def self.ratings  #(form_id)
-    form_id = 'TW4DdU'
+    form_id = 'hxUWlz'
     @@typeform_token = ENV[TYPEFORM_TOKEN_KEY]
     JSON.parse(fetch_responses(form_id).body)
   end
 
   def self.get_ratings
     ratings_data = AaqStarRatingAdapter.ratings['items']
+    # binding.pry
     # @tcs_data = []
     ratings_data.each do |tc_data|
       if name_and_rating_exist(tc_data)
-        tc_data['answers'].select { |response| response['field']['id'] == "64196466"}[0]['choices']['labels'].each do |tc_name|
+        tc_data['answers'].select { |response| response['field']['id'] == "wvmlklnB91sp"}[0]['choices']['labels'].each do |tc_name|
           tc = {}
           tc[:name] = tc_name
-          tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "MIWlzH1BLFWb"}[0]['number']
+          tc[:rating] = tc_data['answers'].select { |response| response['field']['id'] == "UFXe8EZFkaWb"}[0]['number']
           tc[:landing_id] = tc_data["landing_id"]
           tc[:date] = tc_data["submitted_at"]
           if student_added_comment(tc_data)
-            tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "ummCANBFwJ5i"}["text"]
+            tc[:comment] = tc_data["answers"].find {|response| response['field']['id'] == "By8xptHcCiCC"}["text"]
           end
+          # binding.pry
           technical_coach = TechnicalCoach.find_by(name: tc[:name])
           if !technical_coach
             technical_coach = TechnicalCoach.create({name: tc[:name], ratings: []})
@@ -36,15 +38,15 @@ class AaqStarRatingAdapter
       end
     end
   end
-  
+
   def self.name_and_rating_exist(tc_data)
-    !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"} &&
-    !!tc_data['answers'].find { |response| response['field']['id'] == "64196466"}['choices']['labels'] &&
-     !!tc_data['answers'].find { |response| response['field']['id'] == "MIWlzH1BLFWb"}
+    !!tc_data['answers'].find { |response| response['field']['id'] == "wvmlklnB91sp"} &&
+    !!tc_data['answers'].find { |response| response['field']['id'] == "wvmlklnB91sp"}['choices']['labels'] &&
+     !!tc_data['answers'].find { |response| response['field']['id'] == "UFXe8EZFkaWb"}
   end
 
   def self.student_added_comment(tc_data)
-    comment = tc_data['answers'].find { |response| response['field']['id'] == "ummCANBFwJ5i"}
+    comment = tc_data['answers'].find { |response| response['field']['id'] == "By8xptHcCiCC"}
     !!comment
   end
 
