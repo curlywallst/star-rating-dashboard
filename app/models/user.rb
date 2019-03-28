@@ -20,8 +20,7 @@ class User < ApplicationRecord
   end
 
   def is_admin?
-    true
-    # roles.any?{|role| role.admin}
+    roles.any?{|role| role.admin}
   end
 
   def is_technical_coach?
