@@ -21,7 +21,6 @@ class User < ApplicationRecord
 
   def is_admin?
     roles.any?{|role| role.admin}
-    true
   end
 
   def is_technical_coach?

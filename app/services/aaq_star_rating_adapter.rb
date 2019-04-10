@@ -6,6 +6,7 @@ class AaqStarRatingAdapter
   def self.ratings  #(form_id)
     form_id = 'hxUWlz'
     @@typeform_token = ENV[TYPEFORM_TOKEN_KEY]
+    # binding.pry
     JSON.parse(fetch_responses(form_id).body)
   end
 
