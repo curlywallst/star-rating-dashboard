@@ -15,7 +15,8 @@ class AaqStarRatingAdapter
     # binding.pry
     # @tcs_data = []
     ratings_data.each do |tc_data|
-      if name_and_rating_exist(tc_data)
+      
+      if tc_data["answers"] && name_and_rating_exist(tc_data)
         tc_data['answers'].select { |response| response['field']['id'] == "wvmlklnB91sp"}[0]['choices']['labels'].each do |tc_name|
           tc = {}
           tc[:name] = tc_name
@@ -41,9 +42,11 @@ class AaqStarRatingAdapter
   end
 
   def self.name_and_rating_exist(tc_data)
+    # if !!tc_data['answers']
     !!tc_data['answers'].find { |response| response['field']['id'] == "wvmlklnB91sp"} &&
     !!tc_data['answers'].find { |response| response['field']['id'] == "wvmlklnB91sp"}['choices']['labels'] &&
      !!tc_data['answers'].find { |response| response['field']['id'] == "UFXe8EZFkaWb"}
+    # end
   end
 
   def self.student_added_comment(tc_data)
